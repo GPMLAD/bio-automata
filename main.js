@@ -5,11 +5,11 @@ const rows = canvas.height / resolution
 const cols = canvas.width / resolution
 
 // Probabilidades
-let hx = 0.5 // Probabilidade de colonização da espécie nativa
-let hy = 0.5 // Probabilidade de colonização da espécie invasora
-let dx = 0.1 // Probabilidade de morte da célula nativa
-let dy = 0.1 // Probabilidade de morte da célula invasora
-let iy = 0.0 // Probabilidade de invasão
+let hx = 0.2 // Probabilidade de colonização da espécie nativa
+let hy = 0.1 // Probabilidade de colonização da espécie invasora
+let dx = 0.2 // Probabilidade de morte da célula nativa
+let dy = 0.2 // Probabilidade de morte da célula invasora
+let iy = 0.1 // Probabilidade de invasão
 
 function createGrid() {
   return new Array(cols).fill(null).map(() => new Array(rows).fill('empty'))
@@ -47,6 +47,33 @@ function drawGrid(grid) {
   })
 }
 
+function shuffle(originalArray) {
+  const copy = [...originalArray]
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
+  }
+
+  return copy
+}
+
+function randomInvasion(grid) {
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      const currentCell = grid[i][j]
+      const rand = Math.random()
+
+      if (currentCell == 'empty') {
+        if (rand < iy) {
+          grid[i][j] = 'invasive'
+        }
+      }
+    }
+  }
+  return grid
+}
+
 function updateGrid(grid) {
   const newGrid = createGrid()
   for (let i = 0; i < cols; i++) {
@@ -74,28 +101,22 @@ function updateGrid(grid) {
           newGrid[i][j] = 'invasive'
         }
       } else {
-        // Regras para célula vazia
-        // Preciso fazer um array com a ordem dos vizinhos, sortear a ordem e depois passar cada uma das propabilidades individualmente
-        // Preciso fazer isso para cada vizinho que seja nativo
-        if (rand < hy && neighbors.includes('invasive')) {
-          // Preciso fazer isso para cada vizinho que seja invasivo
-          // Colonização por célula invasora
-          newGrid[i][j] = 'invasive'
-        }
-        if (rand < hx && neighbors.includes('native')) {
-          // Colonização por célula nativa
-          newGrid[i][j] = 'native'
-        }
+        const shuffledNeighbors = shuffle(neighbors)
+
+        shuffledNeighbors.forEach(element => {
+          const localProbality = Math.random()
+          if (localProbality < hy && element == 'invasive') {
+            newGrid[i][j] = 'invasive'
+          }
+          if (localProbality < hx && element == 'native') {
+            newGrid[i][j] = 'native'
+          }
+        })
       }
-      /*
-    // Depois que todas as interações terminarem, eu devo ver a matriz novamente e rodar a chance de surgir do nada uma nova invasora.
-    if(rand < iy){
-        newGrid[i][j] = 'invasive'
-    }
-    */
     }
   }
-  return newGrid
+  finalGrid = randomInvasion(newGrid)
+  return finalGrid
 }
 
 function countNeighbors(grid, x, y) {
@@ -123,20 +144,8 @@ grid = randomizeGrid(grid)
 function animate() {
   drawGrid(grid)
   grid = updateGrid(grid)
-  setTimeout(animate, 1000 / 1)
+  setTimeout(animate, 1000/2)
   //requestAnimationFrame(animate);
 }
 
-animate() // Inicia a animação por padrão
-
-/*
-0 1 0
-2 X 2
-0 1 0
- */
-
-/*
-1 1 0
-2 0 0
-0 0 0
- */
+animate()
