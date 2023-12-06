@@ -3,10 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
     <title>Document</title>
   </head>
   <body>
     <canvas id="canvas" width="600" height="600"></canvas>
+    <form action="">
+      <section>
+        <div>
+          <label for="dy">Probabilidade de morte - dy:</label>
+          <input type="range" name="dy" id="dy" oninput="updateValues(this)" />
+          <span id="spanDY"></span>
+        </div>
+
+        <div>
+          <label for="dx">Probabilidade de morte - dx:</label>
+          <input type="range" name="dx" id="dx" oninput="updateValues(this)" />
+          <span id="spanDX"></span>
+        </div>
+
+        <div>
+          <label for="hy">Probabilidade de colonização - hy:</label>
+          <input type="range" name="hy" id="hy" oninput="updateValues(this)" />
+          <span id="spanHY"></span>
+        </div>
+
+        <div>
+          <label for="hx">Probabilidade de colonização - hx:</label>
+          <input type="range" name="hx" id="hx" oninput="updateValues(this)" />
+          <span id="spanHX"></span>
+        </div>
+
+        <div>
+          <label for="iy">Probabilidade de invasão - iy:</label>
+          <input type="range" name="iy" id="iy" oninput="updateValues(this)" />
+          <span id="spanIY"></span>
+        </div>
+
+        <div>
+          <button type="button" id="start">Start</button>
+        </div>
+      </section>
+    </form>
+
     <script src="./main.js"></script>
   </body>
 </html>

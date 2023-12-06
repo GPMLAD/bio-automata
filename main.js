@@ -5,11 +5,78 @@ const rows = canvas.height / resolution
 const cols = canvas.width / resolution
 
 // Probabilidades
-let hx = 0.2 // Probabilidade de colonização da espécie nativa
-let hy = 0.1 // Probabilidade de colonização da espécie invasora
-let dx = 0.2 // Probabilidade de morte da célula nativa
-let dy = 0.2 // Probabilidade de morte da célula invasora
+// Adicionar uma função onde os valores de span ao iniciar a página são os valores de initialValues
+const initialValues = [0.5, 0.5, 0.5, 0.5, 0.1]
+let hx = 0.5 // Probabilidade de colonização da espécie nativa
+let hy = 0.5 // Probabilidade de colonização da espécie invasora
+let dx = 0.5 // Probabilidade de morte da célula nativa
+let dy = 0.5 // Probabilidade de morte da célula invasora
 let iy = 0.1 // Probabilidade de invasão
+
+const spanHY = document.getElementById('spanHY')
+const spanHX = document.getElementById('spanHX')
+const spanDY = document.getElementById('spanDY')
+const spanDX = document.getElementById('spanDX')
+const spanIY = document.getElementById('spanIY')
+
+const hySlider = document.getElementById('hy')
+hySlider.setAttribute('min', '0')
+hySlider.setAttribute('max', '1')
+hySlider.setAttribute('step', '0.1')
+
+const hxSlider = document.getElementById('hx')
+hxSlider.setAttribute('min', '0')
+hxSlider.setAttribute('max', '1')
+hxSlider.setAttribute('step', '0.1')
+
+const dySlider = document.getElementById('dy')
+dySlider.setAttribute('min', '0')
+dySlider.setAttribute('max', '1')
+dySlider.setAttribute('step', '0.1')
+
+const dxSlider = document.getElementById('dx')
+dxSlider.setAttribute('min', '0')
+dxSlider.setAttribute('max', '1')
+dxSlider.setAttribute('step', '0.1')
+
+const iySlider = document.getElementById('iy')
+iySlider.setAttribute('min', '0')
+iySlider.setAttribute('max', '1')
+iySlider.setAttribute('step', '0.1')
+
+const buttonStart = document.getElementById('start')
+buttonStart.addEventListener('click', e => {
+  buttonStart.disabled = true
+  animate()
+})
+
+function updateValues(element) {
+  console.log(element.value)
+  if (element.id === 'hy') {
+    hy = Number(element.value)
+    spanHY.innerText = element.value
+  }
+
+  if (element.id === 'hx') {
+    hx = Number(element.value)
+    spanHX.innerText = element.value
+  }
+
+  if (element.id === 'dy') {
+    dy = Number(element.value)
+    spanDY.innerText = element.value
+  }
+
+  if (element.id === 'dx') {
+    dx = Number(element.value)
+    spanDX.innerText = element.value
+  }
+
+  if (element.id === 'iy') {
+    iy = Number(element.value)
+    spanIY.innerText = element.value
+  }
+}
 
 function createGrid() {
   return new Array(cols).fill(null).map(() => new Array(rows).fill('empty'))
@@ -144,8 +211,22 @@ grid = randomizeGrid(grid)
 function animate() {
   drawGrid(grid)
   grid = updateGrid(grid)
-  setTimeout(animate, 1000/2)
+  setTimeout(animate, 1000 / 1)
+  console.log(`hy:${hy} -- hx:${hx} -- dy:${dy} -- dx:${dx} -- iy:${iy}`)
   //requestAnimationFrame(animate);
 }
 
-animate()
+const inputs = [...document.getElementsByTagName('input')]
+inputs.forEach(element => {
+  updateValues(element)
+})
+
+const labels = [...document.getElementsByTagName('label')]
+labels.forEach(element => {
+  if (element.htmlFor[1] == 'y') {
+    element.style = 'color: red;'
+  } else {
+    element.style = 'color: blue;'
+  }
+})
+//animate()
