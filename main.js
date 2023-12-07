@@ -6,12 +6,26 @@ const cols = canvas.width / resolution
 
 // Probabilidades
 // Adicionar uma função onde os valores de span ao iniciar a página são os valores de initialValues
-const initialValues = [0.5, 0.5, 0.5, 0.5, 0.1]
+// Botão pra resetar a simulação
+// Slider pra controle de velocidade das iterações 1-10 iterações por segundo
+// Botão gravar a simulação como GIF
+// Botão de gravar dados e baixar como .dat ou .csv
+// Plotar gráfico de densidade Figura 7 do relatório f(%) ~ #geração
+
+/*Estilização
+- Deixar o vermelho mais suave
+- Mudar o número de baixo do slider para o lado
+- Centralizar a simulação
+
+*/
+let speed = 1
 let hx = 0.5 // Probabilidade de colonização da espécie nativa
 let hy = 0.5 // Probabilidade de colonização da espécie invasora
 let dx = 0.5 // Probabilidade de morte da célula nativa
 let dy = 0.5 // Probabilidade de morte da célula invasora
 let iy = 0.1 // Probabilidade de invasão
+
+const initialValues = [0.8, 0.3, 0.5, 0.5, 0.1, 1]
 
 const spanHY = document.getElementById('spanHY')
 const spanHX = document.getElementById('spanHX')
@@ -44,6 +58,11 @@ iySlider.setAttribute('min', '0')
 iySlider.setAttribute('max', '1')
 iySlider.setAttribute('step', '0.1')
 
+const speedSlider = document.getElementById('speed')
+speedSlider.setAttribute('min', '1')
+speedSlider.setAttribute('max', '10')
+speedSlider.setAttribute('step', '1')
+
 const buttonStart = document.getElementById('start')
 buttonStart.addEventListener('click', e => {
   buttonStart.disabled = true
@@ -54,27 +73,32 @@ function updateValues(element) {
   console.log(element.value)
   if (element.id === 'hy') {
     hy = Number(element.value)
-    spanHY.innerText = element.value
+    spanHY.innerText = parseFloat(element.value).toFixed(1)
   }
 
   if (element.id === 'hx') {
     hx = Number(element.value)
-    spanHX.innerText = element.value
+    spanHX.innerText = parseFloat(element.value).toFixed(1)
   }
 
   if (element.id === 'dy') {
     dy = Number(element.value)
-    spanDY.innerText = element.value
+    spanDY.innerText = parseFloat(element.value).toFixed(1)
   }
 
   if (element.id === 'dx') {
     dx = Number(element.value)
-    spanDX.innerText = element.value
+    spanDX.innerText = parseFloat(element.value).toFixed(1)
   }
 
   if (element.id === 'iy') {
     iy = Number(element.value)
-    spanIY.innerText = element.value
+    spanIY.innerText = parseFloat(element.value).toFixed(1)
+  }
+
+  if (element.id === 'speed') {
+    speed = Number(element.value)
+    spanSPEED.innerText = parseFloat(element.value).toFixed(1)
   }
 }
 
@@ -102,11 +126,11 @@ function drawGrid(grid) {
   grid.forEach((column, i) => {
     column.forEach((cell, j) => {
       if (cell === 'native') {
-        ctx.fillStyle = '#00f' // Azul para célula nativa
+        ctx.fillStyle = '#B34E7E'
       } else if (cell === 'invasive') {
-        ctx.fillStyle = '#f00' // Vermelho para célula invasora
+        ctx.fillStyle = '#01B3ED'
       } else {
-        ctx.fillStyle = '#fff' // Branco para célula vazia
+        ctx.fillStyle = '#FFF8B8'
       }
       ctx.fillRect(i * resolution, j * resolution, resolution, resolution)
       ctx.strokeRect(i * resolution, j * resolution, resolution, resolution)
@@ -169,7 +193,6 @@ function updateGrid(grid) {
         }
       } else {
         const shuffledNeighbors = shuffle(neighbors)
-
         shuffledNeighbors.forEach(element => {
           const localProbality = Math.random()
           if (localProbality < hy && element == 'invasive') {
@@ -211,12 +234,16 @@ grid = randomizeGrid(grid)
 function animate() {
   drawGrid(grid)
   grid = updateGrid(grid)
-  setTimeout(animate, 1000 / 1)
-  console.log(`hy:${hy} -- hx:${hx} -- dy:${dy} -- dx:${dx} -- iy:${iy}`)
+  setTimeout(animate, 1000 / speed)
   //requestAnimationFrame(animate);
 }
 
 const inputs = [...document.getElementsByTagName('input')]
+
+for (let i = 0; i < inputs.length; i++) {
+  inputs[i].value = initialValues[i]
+}
+
 inputs.forEach(element => {
   updateValues(element)
 })
@@ -224,9 +251,8 @@ inputs.forEach(element => {
 const labels = [...document.getElementsByTagName('label')]
 labels.forEach(element => {
   if (element.htmlFor[1] == 'y') {
-    element.style = 'color: red;'
+    element.style = 'color: black;'
   } else {
-    element.style = 'color: blue;'
+    element.style = 'color: white;'
   }
 })
-//animate()

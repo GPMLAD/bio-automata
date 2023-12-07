@@ -2,14 +2,38 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Freehand', cursive;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 90%;
 }
 
 body {
+  width: 100vw;
+  height: 100vh;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-form {
+body > div {
+  width: 100%;
+  height: 100%;
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+canvas {
+  border: 1px solid black;
+  width: 100%;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 10px 3px #000000;
 }
 
 section {
@@ -17,9 +41,9 @@ section {
   flex-direction: column;
   gap: 8px;
   padding: 8px;
-  width: fit-content;
+  width: 100%;
   border-radius: 8px;
-  background-color: rgba(41, 117, 36, 0.478);
+  background-color: #01b3ed;
   justify-content: space-around;
 }
 
@@ -29,6 +53,11 @@ section div {
   align-items: center;
   gap: 8px;
   text-align: center;
+}
+
+.slider {
+  display: flex;
+  flex-direction: row;
 }
 
 section div label {
@@ -47,7 +76,24 @@ section div label {
   width: 100%;
 }
 
-span{
+span {
   color: white;
   font-weight: bolder;
+}
+
+input[type='range'] {
+  -webkit-appearance: none; /* Removendo o estilo padrão do WebKit/Blink */
+  height: 8px; /* Define a altura do slider */
+  background: #b34e7e; /* Cor de fundo do slider quando não selecionado */
+  outline: none; /* Remove a borda padrão do foco */
+}
+
+/* Estilizando a parte do slider já selecionada */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Removendo o estilo padrão do WebKit/Blink */
+  width: 16px; /* Largura do polegar (thumb) */
+  height: 16px; /* Altura do polegar */
+  border-radius: 100%;
+  background: #000; /* Cor do polegar */
+  cursor: pointer; /* Cursor ao passar sobre o polegar */
 }

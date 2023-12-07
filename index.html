@@ -4,48 +4,102 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Freehand&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
   <body>
-    <canvas id="canvas" width="600" height="600"></canvas>
-    <form action="">
-      <section>
-        <div>
-          <label for="dy">Probabilidade de morte - dy:</label>
-          <input type="range" name="dy" id="dy" oninput="updateValues(this)" />
-          <span id="spanDY"></span>
-        </div>
+    <div class="container">
+      <canvas id="canvas" width="600" height="600"></canvas>
+      <form action="">
+        <section>
+          <div>
+            <button type="button" id="start">Start</button>
+          </div>
+          <div>
+            <label for="dy">Probabilidade de morte - dy:</label>
+            <div class="slider">
+              <input
+                type="range"
+                name="dy"
+                id="dy"
+                oninput="updateValues(this)"
+              />
+              <span id="spanDY"></span>
+            </div>
+          </div>
 
-        <div>
-          <label for="dx">Probabilidade de morte - dx:</label>
-          <input type="range" name="dx" id="dx" oninput="updateValues(this)" />
-          <span id="spanDX"></span>
-        </div>
+          <div>
+            <label for="dx">Probabilidade de morte - dx:</label>
+            <div class="slider">
+              <input
+                type="range"
+                name="dx"
+                id="dx"
+                oninput="updateValues(this)"
+              />
+              <span id="spanDX"></span>
+            </div>
+          </div>
 
-        <div>
-          <label for="hy">Probabilidade de colonização - hy:</label>
-          <input type="range" name="hy" id="hy" oninput="updateValues(this)" />
-          <span id="spanHY"></span>
-        </div>
+          <div>
+            <label for="hy">Probabilidade de colonização - hy:</label>
+            <div class="slider">
+              <input
+                type="range"
+                name="hy"
+                id="hy"
+                oninput="updateValues(this)"
+              />
+              <span id="spanHY"></span>
+            </div>
+          </div>
 
-        <div>
-          <label for="hx">Probabilidade de colonização - hx:</label>
-          <input type="range" name="hx" id="hx" oninput="updateValues(this)" />
-          <span id="spanHX"></span>
-        </div>
+          <div>
+            <label for="hx">Probabilidade de colonização - hx:</label>
+            <div class="slider">
+              <input
+                type="range"
+                name="hx"
+                id="hx"
+                oninput="updateValues(this)"
+              />
+              <span id="spanHX"></span>
+            </div>
+          </div>
 
-        <div>
-          <label for="iy">Probabilidade de invasão - iy:</label>
-          <input type="range" name="iy" id="iy" oninput="updateValues(this)" />
-          <span id="spanIY"></span>
-        </div>
+          <div>
+            <label for="iy">Probabilidade de invasão - iy:</label>
+            <div class="slider">
+              <input
+                type="range"
+                name="iy"
+                id="iy"
+                oninput="updateValues(this)"
+              />
+              <span id="spanIY"></span>
+            </div>
+          </div>
 
-        <div>
-          <button type="button" id="start">Start</button>
-        </div>
-      </section>
-    </form>
-
+          <div>
+            <label for="speed">Velocidade - Iterações por segundo:</label>
+            <div class="slider">
+              <input
+                type="range"
+                name="speed"
+                id="speed"
+                oninput="updateValues(this)"
+              />
+              <span id="spanSPEED"></span>
+            </div>
+          </div>
+        </section>
+      </form>
+    </div>
     <script src="./main.js"></script>
   </body>
 </html>
