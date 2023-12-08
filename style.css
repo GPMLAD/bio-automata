@@ -27,7 +27,7 @@ body > div {
   gap: 16px;
 }
 
-canvas {
+#canvas {
   border: 1px solid black;
   width: 100%;
   max-width: 600px;
